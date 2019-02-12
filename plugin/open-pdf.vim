@@ -6,6 +6,7 @@ if exists("g:loaded_open_pdf")
 endif
 
 " variables {{{
+let g:pdf_pdftotext_args       = get(g:, 'pdf_pdftotext_args', "-layout -nopgbrk")
 let g:pdf_cache_dir       = get(g:, 'pdf_cache_dir', $HOME . "/.open-pdf.vim.cache")
 let g:pdf_open_cmd        = get(g:, 'pdf_open_cmd', 'vsplit | view')
 let g:pdf_edit_cmd        = get(g:, 'pdf_read_cmd', 'edit')

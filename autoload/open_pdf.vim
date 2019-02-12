@@ -21,9 +21,7 @@ function! s:pdftotext(from,to) "{{{
         throw "`pdftotext` command is not found!"
     endif
 
-    echo "converting ".a:from." ..."
-    call s:system(g:pdf_pdftotext_path.' -layout -nopgbrk '.a:from.' - > '.a:to)
-    echo "done."
+    call s:system(g:pdf_pdftotext_path.' '.g:pdf_pdftotext_args.' '.a:from.' - > '.a:to)
 endfunction
 "}}}
 
@@ -48,7 +46,7 @@ endfunction
 function! open_pdf#open(path, bang) "{{{
     execute g:pdf_open_cmd s:cache(fnameescape(a:path),a:bang)
     if has_key(g:pdf_hooks, 'on_opened')
-        call g:pdf_hooks.on_opened()
+        call g:pdf_hooks.on_opened(a:path)
     endif
 endfunction
 "}}}
@@ -57,14 +55,14 @@ endfunction
 function! open_pdf#read(path, bang)
     execute g:pdf_read_cmd s:cache(fnameescape(a:path),a:bang)
     if has_key(g:pdf_hooks, 'on_read')
-        call g:pdf_hooks.on_read()
+        call g:pdf_hooks.on_read(a:path)
     endif
 endfunction
 
 function! open_pdf#edit(path, bang)
     execute g:pdf_edit_cmd s:cache(fnameescape(a:path),a:bang)
     if has_key(g:pdf_hooks, 'on_edited')
-        call g:pdf_hooks.on_edited()
+        call g:pdf_hooks.on_edited(a:path)
     endif
 endfunction
 "}}}
